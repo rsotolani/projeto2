@@ -15,7 +15,7 @@ function HomePage() {
                 <Link to="/items">Listar itens</Link>
             </div>
 
-            <div className="random-beer alink">
+            <div className="new alink">
                 <Link to="/new-item">Novo item</Link>
             </div>
 
