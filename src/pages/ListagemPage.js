@@ -63,5 +63,6 @@ function ListagemPage() {
       })}
     </div>
   );
+}
 
-export default ListagemPage;
+export default ListagemPage
