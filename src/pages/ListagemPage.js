@@ -1,4 +1,4 @@
-function CadastroPage() {
+function ListagemPage() {
     return ( 
         <div>
             
@@ -6,4 +6,4 @@ function CadastroPage() {
      );
 }
 
-export default CadastroPage;
+export default ListagemPage;
