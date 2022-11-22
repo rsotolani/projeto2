@@ -43,83 +43,93 @@ function CadastroPage({ reload, setReload }) {
     }
 
     return ( 
-        <div>
+        <div><Col>
             <Button variant="success" onClick={handleShow}>
                 + Criar novo item
             </Button>
 
             <Modal show={show} onHide={handleClose} size="xl">
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title>Adição de novo item de TI</Modal.Title>
                 </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Row>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Número de acervo:</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    palceholder="Insira o número do acervo do item de TI"
+                                    name="acervo"
+                                    value={form.acervo}
+                                    onChange={handleChange}
+                                    autoFocus
+                                />
+                            </Form.Group>
+                        </Row>
+                        <Row>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Tipo de item:</Form.Label>
+                                <Form.Select
+                                    name="tipoEquipamento"
+                                    onChange={handleChange}>
+                                    <option>Selecione uma opção</option>
+                                    <option value="Notebook">Notebook</option>
+                                    <option value="Computador">Computador</option>
+                                    <option value="Impressora">Impressora</option>
+                                    <option value="Celular">Celular</option>
+                                </Form.Select>                                
+                            </Form.Group>
+                        </Row>
+                        <Row>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Modelo do equipamento:</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    palceholder="Insira a marca e modelo do item de TI"
+                                    name="modelo"
+                                    value={form.modelo}
+                                    onChange={handleChange}                                
+                                />
+                            </Form.Group>
+                        </Row>
+                        <Row>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Status do equipamento:</Form.Label>
+                                <Form.Select
+                                    name="status"
+                                    onChange={handleChange}>
+                                    <option>Selecione uma opção</option>
+                                    <option value="Em operação">Em operação</option>
+                                    <option value="Fora de uso">Fora de uso</option>
+                                </Form.Select>                                
+                            </Form.Group>
+                        </Row>
+                        <Row>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Garantia do equipamento:</Form.Label>
+                                <Form.Select
+                                    name="garantia"
+                                    onChange={handleChange}>
+                                    <option>Selecione uma opção</option>
+                                    <option value="true">Em garantia</option>
+                                    <option value="false">Fora de garantia</option>
+                                </Form.Select>                                
+                            </Form.Group>
+                        </Row>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancelar
+                    </Button>
+                    <Button variant="primary" onClick={handleSubmit}>
+                        Salvar Funcionário
+                    </Button>
+                </Modal.Footer>
             </Modal>
-            <Form>
-                <Row>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Número de acervo:</Form.Label>
-                        <Form.Control
-                            type="text"
-                            palceholder="Insira o número do acervo do item de TI"
-                            name="acervo"
-                            value={form.acervo}
-                            onChange={handleChange}
-                            autoFocus                                
-                        />
-                    </Form.Group>
-                </Row>
-                <Row>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Tipo de item:</Form.Label>
-                        <Form.Select
-                            name="tipoEquipamento"
-                            onChange={handleChange}>
-                            <option>Selecione uma opção</option>
-                            <option value="Notebook">Notebook</option>
-                            <option value="Computador">Computador</option>
-                            <option value="Impressora">Impressora</option>
-                            <option value="Celular">Celular</option>
-                        </Form.Select>                                
-                    </Form.Group>
-                </Row>
-                <Row>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Modelo do equipamento:</Form.Label>
-                        <Form.Control
-                            type="text"
-                            palceholder="Insira a marca e modelo do item de TI"
-                            name="modelo"
-                            value={form.modelo}
-                            onChange={handleChange}                                
-                        />
-                    </Form.Group>
-                </Row>
-                <Row>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Status do equipamento:</Form.Label>
-                        <Form.Select
-                            name="status"
-                            onChange={handleChange}>
-                            <option>Selecione uma opção</option>
-                            <option value="Em operação">Em operação</option>
-                            <option value="Fora de uso">Fora de uso</option>
-                        </Form.Select>                                
-                    </Form.Group>
-                </Row>
-                <Row>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Garantia do equipamento:</Form.Label>
-                        <Form.Select
-                            name="garantia"
-                            onChange={handleChange}>
-                            <option>Selecione uma opção</option>
-                            <option value="true">Em garantia</option>
-                            <option value="false">Fora de garantia</option>
-                        </Form.Select>                                
-                    </Form.Group>
-                </Row>
-                    
-            </Form>
-        </div>
+            
+        </Col></div>
      );
 }
 
