@@ -7,7 +7,7 @@ function CadastroPage({ reload, setReload }) {
     const [show, setShow] = useState(false);
     const [form, setForm] = useState({
         acervo: "",
-        tipoEquipamento: "",
+        tipo_equipamento: "",
         modelo: "",
         status: "",
         garantia: false,
@@ -28,7 +28,7 @@ function CadastroPage({ reload, setReload }) {
             handleClose();
             setForm({
                 acervo: "",
-                tipoEquipamento: "",
+                tipo_equipamento: "",
                 modelo: "",
                 status: "",
                 garantia: false,
@@ -71,13 +71,14 @@ function CadastroPage({ reload, setReload }) {
                             <Form.Group className="mb-3">
                                 <Form.Label>Tipo de item:</Form.Label>
                                 <Form.Select
-                                    name="tipoEquipamento"
+                                    name="tipo_equipamento"
                                     onChange={handleChange}>
                                     <option>Selecione uma opção</option>
                                     <option value="Notebook">Notebook</option>
                                     <option value="Computador">Computador</option>
                                     <option value="Impressora">Impressora</option>
                                     <option value="Celular">Celular</option>
+                                    <option value="Outro">Outro</option>
                                 </Form.Select>                                
                             </Form.Group>
                         </Row>
@@ -124,7 +125,7 @@ function CadastroPage({ reload, setReload }) {
                         Cancelar
                     </Button>
                     <Button variant="primary" onClick={handleSubmit}>
-                        Salvar Funcionário
+                        Salvar Item
                     </Button>
                 </Modal.Footer>
             </Modal>

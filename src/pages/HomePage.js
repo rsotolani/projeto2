@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import CadastroPage from "./CadastroPage";
 
 
 function HomePage() {
@@ -16,7 +17,8 @@ function HomePage() {
             </div>
 
             <div className="new alink">
-                <Link to="/new-item">Novo item</Link>
+                {/* <Link to="/new-item">Novo item</Link>*/}
+                <CadastroPage />
             </div>
 
         </div>
