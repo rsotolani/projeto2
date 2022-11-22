@@ -1,12 +1,31 @@
 import {Link} from "react-router-dom";
+import { useState } from "react";
 import CadastroPage from "./CadastroPage";
+import { Container, Button, FloatingLabel, Form} from "react-bootstrap"
 
 
 function HomePage() {
+    const [search, setSearch] = useState("");
+
+    function handleSearch(e) {
+        setSearch(e.target.value);
+    }
+
     return ( 
-        <div>
+        <div><Container>
             <h1><i>localiza</i>TI</h1>
-            <h2>[search box...]</h2>
+            <FloatingLabel
+                controlId="floatingInput"
+                label="Pesquise por acervo / modelo"
+                className="my-3">
+                <Form.Control
+                    type="text"
+                    placeholder="pesquise"
+                    value={search}
+                    onChange={handleSearch}
+                    autoFocus
+                />
+            </FloatingLabel>
 
             <div className="home alink">
                 <Link to="/">Home</Link>
@@ -21,7 +40,7 @@ function HomePage() {
                 <CadastroPage />
             </div>
 
-        </div>
+        </Container></div>
      );
 }
 

@@ -2,6 +2,7 @@ import { Button, Modal, Row, Col, Form } from "react-bootstrap";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
+import HeaderLocalizaTI from "../components/HeaderLocalizaTI";
 
 function CadastroPage({ reload, setReload }) {
     const [show, setShow] = useState(false);
@@ -43,7 +44,9 @@ function CadastroPage({ reload, setReload }) {
     }
 
     return ( 
-        <div><Col>
+        <div>
+            
+        <Col>
             <Button variant="success" onClick={handleShow}>
                 + Criar novo item
             </Button>
@@ -74,7 +77,7 @@ function CadastroPage({ reload, setReload }) {
                                     name="tipo_equipamento"
                                     onChange={handleChange}>
                                     <option>Selecione uma opção</option>
-                                    <option value="Notebook">Notebook</option>
+                                    <option value="Notebook" selected>Notebook</option>
                                     <option value="Computador">Computador</option>
                                     <option value="Impressora">Impressora</option>
                                     <option value="Celular">Celular</option>
@@ -101,7 +104,7 @@ function CadastroPage({ reload, setReload }) {
                                     name="status"
                                     onChange={handleChange}>
                                     <option>Selecione uma opção</option>
-                                    <option value="Em operação">Em operação</option>
+                                    <option value="Em operação" selected>Em operação</option>
                                     <option value="Fora de uso">Fora de uso</option>
                                 </Form.Select>                                
                             </Form.Group>
@@ -113,7 +116,7 @@ function CadastroPage({ reload, setReload }) {
                                     name="garantia"
                                     onChange={handleChange}>
                                     <option>Selecione uma opção</option>
-                                    <option value="true">Em garantia</option>
+                                    <option value="true" selected>Em garantia</option>
                                     <option value="false">Fora de garantia</option>
                                 </Form.Select>                                
                             </Form.Group>
