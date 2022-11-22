@@ -20,8 +20,7 @@ function ListagemPage({reload, setReload, search=""}) {
   }, [reload]);
 
 
-  console.log(notebooks);
-  console.log("search=",search);
+  {/* console.log(notebooks);*/}
 
   return (
     <div>
@@ -57,16 +56,22 @@ function ListagemPage({reload, setReload, search=""}) {
                     (notebook.localizacao.map((notebookHistotico,noteIndex) => {
                       return (
                         <div key={noteIndex} >
-                            <div>
-                                <p>
-                                  <strong>Local</strong>: {notebookHistotico.local} |
-                                  <strong>Usuário Responsável</strong>: {notebookHistotico.usuario}
-                                </p>
-                                <p>
-                                  Data de Entrega: {notebookHistotico.data_entrega} |
-                                  Data de Devolução: {notebookHistotico.data_devolucao}
-                                </p>
-                            </div>
+                            <Row className="text-left">
+                              <Col>
+                                <strong>Local</strong>: {notebookHistotico.local}
+                              </Col>
+                              <Col>
+                                Data de Entrega: {notebookHistotico.data_entrega}
+                              </Col>
+                            </Row>
+                            <Row className="text-left">
+                              <Col>
+                                <strong>Usuário Responsável</strong>: {notebookHistotico.usuario}
+                              </Col>
+                              <Col>
+                                Data de Devolução: {notebookHistotico.data_devolucao}
+                              </Col>
+                            </Row>
                         </div>          
                       );
                   }))}

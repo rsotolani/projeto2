@@ -1,10 +1,10 @@
-import {Link} from "react-router-dom";
+//import {Link} from "react-router-dom";
 import { useState } from "react";
 
 import CadastroPage from "./CadastroPage";
 import ListagemPage from "./ListagemPage";
 
-import { Container, Button, FloatingLabel, Form, Col, Row} from "react-bootstrap"
+import { Container, FloatingLabel, Form, Col} from "react-bootstrap"
 
 
 function HomePage() {
