@@ -16,7 +16,7 @@ function App() {
         <Route path="/new-item" element={<CadastroPage />} />
         <Route path="/items" element={<ListagemPage />} />
         <Route path="/item/editar/:idItem" element={<EditarPage />} />
-        <Route path={"/item/:idItem"} element={<DetalhesPage />} />
+        <Route path="/item/:idItem" element={<DetalhesPage />} />
       </Routes>
     </div>
   );
