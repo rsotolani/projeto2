@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import axios from "axios";
 import "../App.css";
 
@@ -25,6 +26,7 @@ function ListagemPage() {
       {notebooks.map((notebook) => {
         return (
             <div  key={notebook._id} >
+              <Link to={`/item/${notebook._id}`}>
                 <div>
                     <p>
                         Acervo: {notebook.acervo}
@@ -58,6 +60,7 @@ function ListagemPage() {
                     </p>
                     <hr></hr>
                 </div>
+                </Link>
             </div>          
         );
       })}
