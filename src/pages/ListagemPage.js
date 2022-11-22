@@ -46,18 +46,29 @@ function ListagemPage() {
                     <p>
                         Localização
                     </p>
-                    <p>
-                        Local: {notebook.localizacao[0].local}
-                    </p>
-                    <p>
-                        Usuário Responsável: {notebook.localizacao[0].usuario}
-                    </p>
-                    <p>
-                        Data de Entrega: {notebook.localizacao[0].data_entrega}
-                    </p>
-                    <p>
-                        Data de Devolução: {notebook.localizacao[0].data_devolucao}
-                    </p>
+                    {notebook.localizacao.length > 0 && (
+                    notebook.localizacao.map((notebookHistotico,noteIndex) => {
+                    return (
+                        <div  key={noteIndex} >
+                            <div>
+                                <p>
+                                    Local: {notebookHistotico.local}
+                                </p>
+                                <p>
+                                    Usuário Responsável: {notebookHistotico.usuario}
+                                </p>
+                                <p>
+                                    Data de Entrega: {notebookHistotico.data_entrega}
+                                </p>
+                                <p>
+                                    Data de Devolução: {notebookHistotico.data_devolucao}
+                                </p>
+                                <hr></hr>
+                            </div>
+                        </div>          
+                    );
+                  })
+                  )}
                     <hr></hr>
                 </div>
                 </Link>
