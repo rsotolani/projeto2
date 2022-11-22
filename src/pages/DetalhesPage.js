@@ -1,13 +1,15 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {Button} from "react-bootstrap";
+import toast from "react-hot-toast";
 
 
 function DetalhesPage() {
   const {idItem} = useParams();
   const [notebook, setNotebook] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
+  const navigate = useNavigate(); 
 
 
   useEffect(() => {
@@ -20,6 +22,17 @@ function DetalhesPage() {
     }
     fetchUser();
   }, []);
+
+  async function handleDelete(e) {
+    try {
+      await axios.delete(`https://ironrest.cyclic.app/localizaTI/${idItem}`);
+      navigate("/");
+      toast.success("Item deletado com sucesso");
+    } catch (error) {
+      console.log(error);
+      toast.error("Algo deu errado ao deletar esse Item");
+    }
+  }
 
   return (
     <div>
@@ -43,6 +56,9 @@ function DetalhesPage() {
                 Localização
             </p>
             <div>
+            <Button variant="outline-danger" onClick={handleDelete}>
+                Excluir Registro
+            </Button>
             <Button variant="outline-danger"onClick={() => setShowEdit(true)}>
                 Exibir Histórico
             </Button>
