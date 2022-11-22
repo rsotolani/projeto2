@@ -1,5 +1,8 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
+
 import { Routes, Route } from "react-router-dom";
+
 import HomePage from './pages/HomePage';
 import ListagemPage from './pages/ListagemPage';
 import CadastroPage from './pages/CadastroPage';
