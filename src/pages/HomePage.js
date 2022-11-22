@@ -1,19 +1,29 @@
 import {Link} from "react-router-dom";
 import { useState } from "react";
+
 import CadastroPage from "./CadastroPage";
-import { Container, Button, FloatingLabel, Form} from "react-bootstrap"
+import ListagemPage from "./ListagemPage";
+
+import { Container, Button, FloatingLabel, Form, Col, Row} from "react-bootstrap"
 
 
 function HomePage() {
     const [search, setSearch] = useState("");
+    const [showSearch, setShowSearch] = useState(false);
+
+    const handleCloseSearch = () => setShowSearch(false);
+    const handleShowSearch = () => setShowSearch(true);
+
+    const [reload, setReload] = useState(false);
 
     function handleSearch(e) {
         setSearch(e.target.value);
+        (e.target.value.length > 0) ? handleShowSearch() : handleCloseSearch();
     }
 
     return ( 
         <div><Container>
-            <h1><i>localiza</i>TI</h1>
+            
             <FloatingLabel
                 controlId="floatingInput"
                 label="Pesquise por acervo / modelo"
@@ -27,18 +37,14 @@ function HomePage() {
                 />
             </FloatingLabel>
 
-            <div className="home alink">
-                <Link to="/">Home</Link>
-            </div>
-
-            <div className="listar alink">
-                <Link to="/items">Listar itens</Link>
-            </div>
-
             <div className="new alink">
                 {/* <Link to="/new-item">Novo item</Link>*/}
-                <CadastroPage />
+                <CadastroPage reload={reload} setReload={setReload} />
             </div>
+
+            <Col>
+                {(showSearch) && ( <ListagemPage reload={reload} setReload={setReload} search={search}/> )}
+            </Col>
 
         </Container></div>
      );

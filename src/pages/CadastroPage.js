@@ -2,7 +2,7 @@ import { Button, Modal, Row, Col, Form } from "react-bootstrap";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
-import HeaderLocalizaTI from "../components/HeaderLocalizaTI";
+//import HeaderLocalizaTI from "../components/HeaderLocalizaTI";
 
 function CadastroPage({ reload, setReload }) {
     const [show, setShow] = useState(false);
