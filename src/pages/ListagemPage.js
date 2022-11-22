@@ -68,4 +68,4 @@ function ListagemPage() {
   );
 }
 
-export default ListagemPage;
+export default ListagemPage
