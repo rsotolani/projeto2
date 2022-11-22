@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {Button} from "react-bootstrap";
@@ -62,6 +62,11 @@ function DetalhesPage() {
             <Button variant="outline-danger"onClick={() => setShowHistorico(true)}>
                 Exibir Histórico
             </Button>
+            <Link to={`/item/editar/${notebook._id}`}>
+                <Button variant="outline-danger">
+                    Editar Item
+                </Button>
+            </Link>
             {showHistorico === true && (
                 notebook.localizacao.map((notebookHistotico,noteIndex) => {
                     return (

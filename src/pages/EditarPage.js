@@ -17,26 +17,42 @@ import {
 
 
 
-
-
 function EditarPage() {
     const { idItem } = useParams()
-//const [item, setItem] = useState({}); //informações do user que veio da minha API
-const [showEdit, setShowEdit] = useState(false); //controlar a visualização form // true -> form aparece
-const [form, setForm] = useState({
-    acervo: "",
-    tipo_equipamento: "",
-    modelo: "",
-    status: "",
-    garantia: "",
-    localizacao: [],
-});
+    const [showEdit, setShowEdit] = useState(false); 
+    const [form, setForm] = useState({
+        acervo: "",
+        tipo_equipamento: "",
+        modelo: "",
+        status: "",
+        garantia: "",
+        localizacao: [
+            {
+                local:"",
+                usuario:"",
+                data_entrega:"",
+                data_devolucao:""
+            }
+        ],
+       
+    });
 
-//const stack = ["React", "JS", "HTML", "CSS", "NodeJS", "MongoDB", "Express"];
+    const [reload, setReload] = useState(false);
+    const [notebooks, setNotebooks] = useState([]);
+    const [showHistorico, setShowHistorico] = useState(false);
+    const navigate = useNavigate(); 
 
-  //const [isLoading, setIsLoading] = useState(true);
-  const [reload, setReload] = useState(false);
-  //const [showTasks, setShowTasks] = useState(false);
+
+  useEffect(() => {
+    async function fetchNotebooks() {
+      const response = await axios.get(
+        `https://ironrest.cyclic.app/localizaTI/${idItem}`
+      );
+      setNotebooks(response.data);
+    }
+
+    fetchNotebooks();
+  }, []);
 
   function handleChange(e) {
     if (e.target.name === "active") {
@@ -50,7 +66,6 @@ const [form, setForm] = useState({
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      //clonando o form para que possamos fazer as alterações necessárias
       const clone = { ...form };
       delete clone._id;
 
@@ -59,11 +74,28 @@ const [form, setForm] = useState({
       toast.success("Alterações salvas");
       setReload(!reload);
       setShowEdit(false);
+      navigate(`/item/${notebooks._id}`);
     } catch (error) {
       console.log(error);
       toast.error("Algo deu errado. Tente novamente.");
     }
   }
+
+  async function handleDeleteTask(index) {
+    try {
+      const clone = { ...notebooks };
+      delete clone._id;
+
+      clone.localizacao.splice(index, 1);
+
+      await axios.put(`https://ironrest.cyclic.app/localizaTI/${idItem}`, clone);
+      setReload(!reload);
+    } catch (error) {
+      console.log(error);
+      toast.error("Task não foi excluída");
+    }
+  }
+
     return ( 
         <div>
             <Card>
@@ -75,7 +107,7 @@ const [form, setForm] = useState({
                         <Form.Label>Acervo</Form.Label>
                         <Form.Control
                           type="text"
-                          placeholder="Insira o acervo do item"
+                          placeholder={notebooks.acervo}
                           name="acervo"
                           value={form.acervo}
                           onChange={handleChange}
@@ -88,7 +120,7 @@ const [form, setForm] = useState({
                         <Form.Label>Tipo de Equipamento</Form.Label>
                         <Form.Control
                           type="text"
-                          placeholder="Insira tipo de equipamento"
+                          placeholder={notebooks.tipo}
                           name="tipo_equipamento"
                           value={form.tipo_equipamento}
                           onChange={handleChange}
@@ -102,7 +134,7 @@ const [form, setForm] = useState({
                         <Form.Label>Modelo</Form.Label>
                         <Form.Control
                           type="text"
-                          placeholder="Insira o modelo do Equipamento"
+                          placeholder={notebooks.modelo}
                           name="modelo"
                           value={form.modelo}
                           onChange={handleChange}
@@ -113,9 +145,9 @@ const [form, setForm] = useState({
                       <Form.Group className="mb-3">
                         <Form.Label>Status</Form.Label>
                         <Form.Control
-                          type="S"
-                          placeholder="Insira o email do funcionário"
-                          name="email"
+                          type="text"
+                          placeholder={notebooks.status}
+                          name="status"
                           value={form.email}
                           onChange={handleChange}
                         />
@@ -125,59 +157,54 @@ const [form, setForm] = useState({
                   <Row>
                     <Col>
                       <Form.Group className="mb-3">
-                        <Form.Label>Salário</Form.Label>
-                        <Form.Control
-                          type="number"
-                          placeholder="Insira o valor do salário R$"
-                          name="salario"
-                          value={form.salario}
-                          onChange={handleChange}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Departamento</Form.Label>
+                        <Form.Label>Garantia</Form.Label>
                         <Form.Select
-                          name="departamento"
+                          name="garantia"
                           onChange={handleChange}
-                          defaultValue={form.departamento}
+                          defaultValue={form.garantia}
                         >
                           <option>Selecione uma opção</option>
-                          <option value="Front-End">Front-End</option>
-                          <option value="Back-End">Back-End</option>
-                          <option value="Mobile">Mobile</option>
-                          <option value="Financeiro">Financeiro</option>
-                          <option value="Marketing">Marketing</option>
-                          <option value="People">People</option>
-                          <option value="Full-Stack">Full-Stack</option>
+                          <option value="true">Sim</option>
+                          <option value="False">Não</option>
                         </Form.Select>
                       </Form.Group>
                     </Col>
                   </Row>
                   <Row>
                     <Col>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Data de Admissão</Form.Label>
-                        <Form.Control
-                          type="date"
-                          name="dataAdmissao"
-                          value={form.dataAdmissao}
-                          onChange={handleChange}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col>
-                      <Form.Group>
-                        <Form.Label>Adicione sua foto</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Insira a url da sua foto de perfil"
-                          name="foto"
-                          value={form.foto}
-                          onChange={handleChange}
-                        />
-                      </Form.Group>
+                    <Button variant="outline-danger"onClick={() => setShowHistorico(true)}>
+                      Exibir Histórico
+                    </Button>
+                    
+                    {showHistorico === true && (
+                    
+                        <ListGroup>
+                            {notebooks.localizacao.map((notebook, index) => {
+                            return (
+                                <div  key={index} >
+                                    <ListGroup.Item>
+                                        <Button
+                                            variant="danger"
+                                            size="sm"
+                                            onClick={() => handleDeleteTask(index)}
+                                        >
+                                            Apagar Registro
+                                        </Button>{" "}
+                                        <div>
+                                            Local: {notebook.local}<br></br>
+                                            Usuário Responsável: {notebook.usuario}<br></br>
+                                            Data de Entrega: {notebook.data_entrega}<br></br>
+                                            Data Devolução: {notebook.data_devolucao}
+                                        </div>
+                                    </ListGroup.Item>
+                            </div>
+                            );
+                        })
+                        .reverse()}
+                        </ListGroup>
+                    )}   
+                    
+                   
                     </Col>
                   </Row>
                 </Form>
@@ -197,18 +224,9 @@ const [form, setForm] = useState({
                       Salvar Alterações
                     </Button>
                   </Col>
-                  <Col>
-                    <Form.Group>
-                      <Form.Check
-                        type="checkbox"
-                        label="Funcionário ativo na empresa"
-                        name="active"
-                        checked={form.active}
-                        onChange={handleChange}
-                      />
-                    </Form.Group>
-                  </Col>
+                  
                 </Row>
+                
               </Card.Footer>
             </Card>
             
