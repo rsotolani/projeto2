@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 function DetalhesPage() {
   const {idItem} = useParams();
   const [notebook, setNotebook] = useState([]);
-  const [showEdit, setShowEdit] = useState(false);
+  const [showHistorico, setShowHistorico] = useState(false);
   const navigate = useNavigate(); 
 
 
@@ -59,25 +59,25 @@ function DetalhesPage() {
             <Button variant="outline-danger" onClick={handleDelete}>
                 Excluir Registro
             </Button>
-            <Button variant="outline-danger"onClick={() => setShowEdit(true)}>
+            <Button variant="outline-danger"onClick={() => setShowHistorico(true)}>
                 Exibir Histórico
             </Button>
-            {showEdit === true && (
-                notebook.localizacao.map((notebook_l,noteIndex) => {
+            {showHistorico === true && (
+                notebook.localizacao.map((notebookHistotico,noteIndex) => {
                     return (
                         <div  key={noteIndex} >
                             <div>
                                 <p>
-                                    Local: {notebook_l.local}
+                                    Local: {notebookHistotico.local}
                                 </p>
                                 <p>
-                                    Usuário Responsável: {notebook_l.usuario}
+                                    Usuário Responsável: {notebookHistotico.usuario}
                                 </p>
                                 <p>
-                                    Data de Entrega: {notebook_l.data_entrega}
+                                    Data de Entrega: {notebookHistotico.data_entrega}
                                 </p>
                                 <p>
-                                    Data de Devolução: {notebook_l.data_devolucao}
+                                    Data de Devolução: {notebookHistotico.data_devolucao}
                                 </p>
                                 <hr></hr>
                             </div>
