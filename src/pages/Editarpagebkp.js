@@ -17,7 +17,7 @@ import {
 
 
 
-function EditarPagebkp() {
+function EditarPage() {
     const { idItem } = useParams()
     const [showEdit, setShowEdit] = useState(false); 
     const [form, setForm] = useState({
@@ -31,11 +31,19 @@ function EditarPagebkp() {
                 local:"",
                 usuario:"",
                 data_entrega:"",
-                data_devolucao:""
+                data_devolucao:"",
             }
-        ],
-       
+        ],  
     });
+
+    const [formLocalizacao, setFormLocalizacao] = useState({
+            local:"",
+            usuario:"",
+            data_entrega:"",
+            data_devolucao:""
+    });
+
+    const localizacoes = [];
 
     const [reload, setReload] = useState(false);
     const [notebooks, setNotebooks] = useState([]);
@@ -59,15 +67,38 @@ function EditarPagebkp() {
       setForm({ ...form, active: e.target.checked });
       return;
     }
+    if(e.target.name=="usuario"||e.target.name=="local"||e.target.name=="data_devolucao"||e.target.name=="data_entrega"){
+        setFormLocalizacao({ ...formLocalizacao,[e.target.name]: e.target.value });
+    } else setForm({ ...form, [e.target.name]: e.target.value });
+    
 
-    setForm({ ...form, [e.target.name]: e.target.value });
+    
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const clone = { ...form };
+      let clone = { ...form };
+      const index = clone.localizacao.indexOf(e.target.name);
+      clone.localizacao.splice(index, 1);
+      clone.localizacao.push(formLocalizacao);
       delete clone._id;
+      
+      if (!clone.acervo){
+        delete clone.acervo;
+      }
+      if (!clone.tipo_equipamento){
+        delete clone.tipo_equipamento;
+      }
+      if (!clone.modelo){
+        delete clone.modelo;
+      }
+      if (!clone.status){
+        delete clone.status;
+      }
+      if (!clone.garantia){
+        delete clone.garantia;
+      }
 
       await axios.put(`https://ironrest.cyclic.app/localizaTI/${idItem}`, clone);
 
@@ -98,6 +129,7 @@ function EditarPagebkp() {
 
     return ( 
         <div>
+            <Container>
             <Card>
               <Card.Body>
                 <Form>
@@ -117,14 +149,19 @@ function EditarPagebkp() {
                     </Col>
                     <Col>
                       <Form.Group className="mb-3">
-                        <Form.Label>Tipo de Equipamento</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder={notebooks.tipo}
+                        <Form.Label>Tipo de Item</Form.Label>
+                        <Form.Select
                           name="tipo_equipamento"
-                          value={form.tipo_equipamento}
                           onChange={handleChange}
-                        />
+                          defaultValue={form.tipo_equipamento}
+                        >
+                          <option value="notebook">Notebook</option>
+                          <option value="computador">Computador</option>
+                          <option value="impressora">Impressora</option>
+                          <option value="celular">Celular</option>
+                          <option value="outro">Outro</option>
+                        </Form.Select>
+                        
                       </Form.Group>
                     </Col>
                   </Row>
@@ -143,12 +180,56 @@ function EditarPagebkp() {
                     </Col>
                     <Col>
                       <Form.Group className="mb-3">
-                        <Form.Label>Status</Form.Label>
+                      <Form.Label>Status do equipamento:</Form.Label>
+                        <Form.Select
+                            name="status"
+                            onChange={handleChange}>
+                            <option>Selecione uma opção</option>
+                            <option defaultValue="Em operação">Em operação</option>
+                            <option value="Fora de uso">Fora de uso</option>
+                        </Form.Select>   
+                      </Form.Group>
+                    </Col>
+
+                    
+
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Form.Group className="mb-3">
+                      <Form.Label>Garantia do equipamento:</Form.Label>
+                        <Form.Select
+                            name="garantia"
+                            onChange={handleChange}>
+                            <option>Selecione uma opção</option>
+                            <option defaultValue="true">Em garantia</option>
+                            <option value="false">Fora de garantia</option>
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  Registro de Empréstimo
+                  <Row>
+                    <Col>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Localização</Form.Label>
                         <Form.Control
                           type="text"
-                          placeholder={notebooks.status}
-                          name="status"
-                          value={form.email}
+                          placeholder="Insira a Localização do Equipamento"
+                          name="local"
+                          value={formLocalizacao.local}
+                          onChange={handleChange}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Responsável</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Insira o nome do usuário Responsável"
+                          name="usuario"
+                          value={formLocalizacao.usuario}
                           onChange={handleChange}
                         />
                       </Form.Group>
@@ -157,16 +238,26 @@ function EditarPagebkp() {
                   <Row>
                     <Col>
                       <Form.Group className="mb-3">
-                        <Form.Label>Garantia</Form.Label>
-                        <Form.Select
-                          name="garantia"
+                        <Form.Label>Entrega</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Data de Entrega"
+                          name="data_entrega"
+                          value={formLocalizacao.data_entrega}
                           onChange={handleChange}
-                          defaultValue={form.garantia}
-                        >
-                          <option>Selecione uma opção</option>
-                          <option value="true">Sim</option>
-                          <option value="False">Não</option>
-                        </Form.Select>
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Devolução</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Data da Devolução"
+                          name="data_devolucao"
+                          value={formLocalizacao.data_devolucao}
+                          onChange={handleChange}
+                        />
                       </Form.Group>
                     </Col>
                   </Row>
@@ -229,9 +320,9 @@ function EditarPagebkp() {
                 
               </Card.Footer>
             </Card>
-            
+        </Container>    
         </div>
      );
 }
 
-export default EditarPagebkp;
+export default EditarPage;
