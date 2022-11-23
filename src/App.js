@@ -18,7 +18,7 @@ import NavBar from "./components/NavBar";
 function App() {
 
   const [showList, setShowList] = useState(false);
-  console.log(showList);
+  //console.log(showList);
   return (
     <div className="App">
       <Toaster />

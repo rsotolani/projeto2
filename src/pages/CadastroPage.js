@@ -75,9 +75,10 @@ function CadastroPage({ reload, setReload }) {
                                 <Form.Label>Tipo de item:</Form.Label>
                                 <Form.Select
                                     name="tipo_equipamento"
-                                    onChange={handleChange}>
+                                    onChange={handleChange}
+                                    defaultValue="Notebook">
                                     <option>Selecione uma opção</option>
-                                    <option dafaultValue="Notebook">Notebook</option>
+                                    <option value="Notebook">Notebook</option>
                                     <option value="Computador">Computador</option>
                                     <option value="Impressora">Impressora</option>
                                     <option value="Celular">Celular</option>
@@ -102,9 +103,10 @@ function CadastroPage({ reload, setReload }) {
                                 <Form.Label>Status do equipamento:</Form.Label>
                                 <Form.Select
                                     name="status"
-                                    onChange={handleChange}>
+                                    onChange={handleChange}
+                                    defaultValue="Em operação">
                                     <option>Selecione uma opção</option>
-                                    <option defaultValue="Em operação">Em operação</option>
+                                    <option value="Em operação">Em operação</option>
                                     <option value="Fora de uso">Fora de uso</option>
                                 </Form.Select>                                
                             </Form.Group>

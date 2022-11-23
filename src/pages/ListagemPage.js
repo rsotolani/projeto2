@@ -48,7 +48,7 @@ function ListagemPage({reload, setReload, search="", showList}) {
                                   item.acervo.toLowerCase().includes(search.toLowerCase()))
               .map((item) => {
                 return (
-                    <tr>
+                    <tr key={item._id}>
                       <td>{item.acervo}</td>
                       <td>{item.tipo_equipamento}</td>
                       <td>{item.modelo}</td>
