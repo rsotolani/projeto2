@@ -1,99 +1,74 @@
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { Container, Card, Col, Row, Button} from "react-bootstrap"
+import { Container, Card, Col, Row, Button, Table} from "react-bootstrap"
 import axios from "axios";
 import "../App.css";
 
 function ListagemPage({reload, setReload, search=""}) {
   const [notebooks, setNotebooks] = useState([]);
+  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
 
   useEffect(() => {
-    async function fetchNotebooks() {
+    async function fetchItems() {
       const response = await axios.get(
         "https://ironrest.cyclic.app/localizaTI"
       );
       setNotebooks(response.data);
+      setItems(response.data);
+      setIsLoading(false);
     }
 
-    fetchNotebooks();
+    fetchItems();
   }, [reload]);
 
+  function ultimoLocal(locais){
+    if (locais.length <= 0) return false;
+    let local = (locais[locais.length - 1]);
+    return local;
+  }
 
-  {/* console.log(notebooks);*/}
 
   return (
     <div>
       <Container>
-      {notebooks
-        .filter( (notebook) => notebook.modelo.toLowerCase().includes(search.toLowerCase()) ||
-                               notebook.acervo.toLowerCase().includes(search.toLowerCase()))
-        .map((notebook) => {
-        return (
-            <Card className="text-center" bg="light" key={notebook._id} >
-              <Card.Header>
-                <Card.Title>Número de Acervo: {notebook.acervo}</Card.Title>
-              </Card.Header>
-              <Card.Body>
-                <Row>
-                  <Col>
-                    <Card.Title>Tipo de equipamento</Card.Title>
-                    <Card.Text>{notebook.tipo_equipamento}</Card.Text>
-                    <Card.Title>Modelo</Card.Title>
-                    <Card.Text>{notebook.modelo}</Card.Text>
-                  </Col>
-                  <Col>
-                   <Card.Title>Status</Card.Title>
-                    <Card.Text>{notebook.status}</Card.Text>
-                    <Card.Title>Garantia</Card.Title>
-                    <Card.Text>{notebook.garantia}</Card.Text>
-                  </Col>
-                </Row>
-                <Row>
-                  <hr />
-                  <p>Localização</p>
-                  { (notebook.localizacao.length > 0) && 
-                    (notebook.localizacao.map((notebookHistotico,noteIndex) => {
-                      return (
-                        <div key={noteIndex} >
-                            <Row className="text-left">
-                              <Col>
-                                <strong>Local</strong>: {notebookHistotico.local}
-                              </Col>
-                              <Col>
-                                Data de Entrega: {notebookHistotico.data_entrega}
-                              </Col>
-                            </Row>
-                            <Row className="text-left">
-                              <Col>
-                                <strong>Usuário Responsável</strong>: {notebookHistotico.usuario}
-                              </Col>
-                              <Col>
-                                Data de Devolução: {notebookHistotico.data_devolucao}
-                              </Col>
-                            </Row>
-                        </div>          
-                      );
-                  }))}
-                </Row>
-              </Card.Body>
-              <Card.Footer className="text-muted">
-                <Row>
-                  <Col>
-                    <Link to={`/item/${notebook._id}`}>
-                      <Button
-                        variant="outline-secondary">
+        <Table bordered hover variant="light-dark" className="mt-2">
+          <thead>
+            <tr>
+              <th>Acervo</th>
+              <th>Equipamento</th>
+              <th>Modelo</th>
+              <th>Local</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!isLoading && 
+              items
+              .filter( (item) =>  item.modelo.toLowerCase().includes(search.toLowerCase()) ||
+                                  item.acervo.toLowerCase().includes(search.toLowerCase()))
+              .map((item) => {
+                return (
+                    <tr>
+                      <td>{item.acervo}</td>
+                      <td>{item.tipo_equipamento}</td>
+                      <td>{item.modelo}</td>
+                      <td>{ultimoLocal(item.localizacao) &&
+                        ultimoLocal(item.localizacao).local}</td>
+                      <td>
+                        <Link to={`/item/${item._id}`}>
+                          <Button variant="outline-secondary">
                         Ver detalhes
                       </Button>
-                    </Link>
-                  </Col>
-                  <Col>
-                  </Col>
-                </Row>
-              </Card.Footer>
-            </Card>
-        )}
-      )}
+                    </Link></td>
+                    </tr>
+                )}
+              )
+            }
+
+          </tbody>
+        </Table>
       </Container>
     </div>
   );

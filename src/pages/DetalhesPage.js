@@ -97,6 +97,13 @@ function DetalhesPage() {
                     </Link>
                   </Col>
                   <Col>
+                    <Link to={`/item/editar/${idItem}`}>
+                        <Button variant="success" >
+                            Editar este item
+                        </Button>
+                    </Link>
+                  </Col>
+                  <Col>
                     <Button variant="success" >
                         Atualizar localização
                     </Button>
