@@ -9,10 +9,10 @@ import { Container, FloatingLabel, Form, Col} from "react-bootstrap"
 
 function HomePage({showList, setShowList}) {
     const [search, setSearch] = useState("");
-    const [showSearch, setShowSearch] = useState(false);
+    //const [showSearch, setShowSearch] = useState(false);
 
-    const handleCloseSearch = () => setShowSearch(false);
-    const handleShowSearch = () => setShowSearch(true);
+    // const handleCloseSearch = () => setShowSearch(false);
+    // const handleShowSearch = () => setShowSearch(true);
 
     const [reload, setReload] = useState(false);
 
