@@ -89,7 +89,7 @@ function DetalhesPage() {
               <Card.Footer className="text-muted">
                 <Row>
                   <Col>
-                    <Link to={`/items`}>
+                    <Link to={`/`}>
                       <Button
                         variant="outline-secondary">
                         Voltar
