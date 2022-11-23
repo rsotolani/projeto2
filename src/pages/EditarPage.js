@@ -16,6 +16,7 @@ import {
 } from "react-bootstrap";
 
 
+const localizacoes = [];
 
 function EditarPage() {
     const { idItem } = useParams()
@@ -43,7 +44,7 @@ function EditarPage() {
             data_devolucao:""
     });
 
-    const localizacoes = [];
+    
 
     const [reload, setReload] = useState(false);
     const [notebooks, setNotebooks] = useState([]);
@@ -70,18 +71,32 @@ function EditarPage() {
     if(e.target.name=="usuario"||e.target.name=="local"||e.target.name=="data_devolucao"||e.target.name=="data_entrega"){
         setFormLocalizacao({ ...formLocalizacao,[e.target.name]: e.target.value });
     } else setForm({ ...form, [e.target.name]: e.target.value });
-    
-
-    
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
       let clone = { ...form };
+      let cloneNotebooks = {...notebooks}
+      //pega itens da collection
+      if (cloneNotebooks.localizacao.length>0){
+        cloneNotebooks.localizacao.map((objetolocalizacao) => {
+            return (
+                localizacoes.push(objetolocalizacao)
+            );})
+      }
+      localizacoes.push(formLocalizacao);
+      console.log("clone notebooks ",cloneNotebooks.localizacao)
+      console.log("localizacoes ",localizacoes);
+      console.log("formlocalizacao ", formLocalizacao);
       const index = clone.localizacao.indexOf(e.target.name);
       clone.localizacao.splice(index, 1);
-      clone.localizacao.push(formLocalizacao);
+      localizacoes.map((localizacaoitem) => {
+        return (
+            clone.localizacao.push(localizacaoitem)
+        );})
+      
+      
       delete clone._id;
       
       if (!clone.acervo){
@@ -129,6 +144,7 @@ function EditarPage() {
 
     return ( 
         <div>
+            <Container>
             <Card>
               <Card.Body>
                 <Form>
@@ -148,14 +164,19 @@ function EditarPage() {
                     </Col>
                     <Col>
                       <Form.Group className="mb-3">
-                        <Form.Label>Tipo de Equipamento</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder={notebooks.tipo_equipamento}
+                        <Form.Label>Tipo de Item</Form.Label>
+                        <Form.Select
                           name="tipo_equipamento"
-                          value={form.tipo_equipamento}
                           onChange={handleChange}
-                        />
+                          defaultValue={form.tipo_equipamento}
+                        >
+                          <option value="notebook">Notebook</option>
+                          <option value="computador">Computador</option>
+                          <option value="impressora">Impressora</option>
+                          <option value="celular">Celular</option>
+                          <option value="outro">Outro</option>
+                        </Form.Select>
+                        
                       </Form.Group>
                     </Col>
                   </Row>
@@ -174,14 +195,14 @@ function EditarPage() {
                     </Col>
                     <Col>
                       <Form.Group className="mb-3">
-                        <Form.Label>Status</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder={notebooks.status}
-                          name="status"
-                          value={form.status}
-                          onChange={handleChange}
-                        />
+                      <Form.Label>Status do equipamento:</Form.Label>
+                        <Form.Select
+                            name="status"
+                            onChange={handleChange}>
+                            <option>Selecione uma opção</option>
+                            <option defaultValue="Em operação">Em operação</option>
+                            <option value="Fora de uso">Fora de uso</option>
+                        </Form.Select>   
                       </Form.Group>
                     </Col>
 
@@ -191,15 +212,13 @@ function EditarPage() {
                   <Row>
                     <Col>
                       <Form.Group className="mb-3">
-                        <Form.Label>Garantia</Form.Label>
+                      <Form.Label>Garantia do equipamento:</Form.Label>
                         <Form.Select
-                          name="garantia"
-                          onChange={handleChange}
-                          defaultValue={form.garantia}
-                        >
-                          <option>Selecione uma opção</option>
-                          <option value="true">Sim</option>
-                          <option value="False">Não</option>
+                            name="garantia"
+                            onChange={handleChange}>
+                            <option>Selecione uma opção</option>
+                            <option defaultValue="true">Em garantia</option>
+                            <option value="false">Fora de garantia</option>
                         </Form.Select>
                       </Form.Group>
                     </Col>
@@ -316,7 +335,7 @@ function EditarPage() {
                 
               </Card.Footer>
             </Card>
-            
+        </Container>    
         </div>
      );
 }
