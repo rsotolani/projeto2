@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { Container, Card, Col, Row, Button, Table} from "react-bootstrap"
+import { Container, Button, Table} from "react-bootstrap"
 import axios from "axios";
 import "../App.css";
 
-function ListagemPage({reload, setReload, search=""}) {
-  const [notebooks, setNotebooks] = useState([]);
+function ListagemPage({reload, setReload, search="", showList}) {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -15,7 +14,6 @@ function ListagemPage({reload, setReload, search=""}) {
       const response = await axios.get(
         "https://ironrest.cyclic.app/localizaTI"
       );
-      setNotebooks(response.data);
       setItems(response.data);
       setIsLoading(false);
     }
@@ -29,9 +27,9 @@ function ListagemPage({reload, setReload, search=""}) {
     return local;
   }
 
-
   return (
     <div>
+    
       <Container>
         <Table bordered hover variant="light-dark" className="mt-2">
           <thead>
@@ -69,6 +67,7 @@ function ListagemPage({reload, setReload, search=""}) {
 
           </tbody>
         </Table>
+
       </Container>
     </div>
   );

@@ -7,7 +7,7 @@ import ListagemPage from "./ListagemPage";
 import { Container, FloatingLabel, Form, Col} from "react-bootstrap"
 
 
-function HomePage() {
+function HomePage({showList, setShowList}) {
     const [search, setSearch] = useState("");
     const [showSearch, setShowSearch] = useState(false);
 
@@ -16,9 +16,15 @@ function HomePage() {
 
     const [reload, setReload] = useState(false);
 
+
     function handleSearch(e) {
         setSearch(e.target.value);
-        (e.target.value.length > 0) ? handleShowSearch() : handleCloseSearch();
+        // if (e.target.value.length > 0) {
+        //     handleShowSearch();
+        //     setShowList(false);
+        // } else { 
+        //     handleCloseSearch()
+        // }
     }
 
     return ( 
@@ -38,12 +44,13 @@ function HomePage() {
             </FloatingLabel>
 
             <div className="new alink">
-                {/* <Link to="/new-item">Novo item</Link>*/}
                 <CadastroPage reload={reload} setReload={setReload} />
             </div>
 
             <Col>
-                {(showSearch) && ( <ListagemPage reload={reload} setReload={setReload} search={search}/> )}
+                <ListagemPage reload={reload} setReload={setReload} search={search}/>
+                {/*(showSearch) && ( <ListagemPage reload={reload} setReload={setReload} search={search}/> )*/}
+                {/*showList && <ListagemPage reload={reload} setReload={setReload} search={search}/> */}
             </Col>
 
         </Container></div>

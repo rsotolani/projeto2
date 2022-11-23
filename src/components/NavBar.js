@@ -1,7 +1,10 @@
-import { Navbar, Container} from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Navbar, Container, Button} from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 
-function NavBar() {
+function NavBar( {showList, setShowList}) {
+
+  const navigate = useNavigate();
+
   return (
     <Navbar bg="light" variant="light">
         <Container>
@@ -10,9 +13,15 @@ function NavBar() {
                 <i>localiza</i><strong>TI</strong>
             </Navbar.Brand>
             </Link>
-            <Link to="/items" style={{ textDecoration: "none" }}>
-                <Navbar.Brand>Listar</Navbar.Brand>
-            </Link>
+
+            {/* <Button onClick={(e) => {
+              e.preventDefault();
+                setShowList(!showList);
+                navigate("/");
+                }}>
+              <Navbar.Brand>Listar</Navbar.Brand>
+            </Button> */}
+            
         </Container>
       </Navbar>
   );
