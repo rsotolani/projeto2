@@ -29,7 +29,7 @@ function DetalhesPage() {
       console.log(response.data);
     }
     fetchItem();
-  }, []);
+  }, [idItem]);
 
   async function handleDelete(e) {
     try {
