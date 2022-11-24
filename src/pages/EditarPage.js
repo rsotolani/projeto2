@@ -9,9 +9,6 @@ import {
   Row,
   Col,
   Form,
-  Spinner,
-  Badge,
-  Offcanvas,
   ListGroup,
 } from "react-bootstrap";
 
@@ -68,7 +65,7 @@ function EditarPage() {
       setForm({ ...form, active: e.target.checked });
       return;
     }
-    if(e.target.name=="usuario"||e.target.name=="local"||e.target.name=="data_devolucao"||e.target.name=="data_entrega"){
+    if(e.target.name==="usuario"||e.target.name==="local"||e.target.name==="data_devolucao"||e.target.name==="data_entrega"){
         setFormLocalizacao({ ...formLocalizacao,[e.target.name]: e.target.value });
     } else setForm({ ...form, [e.target.name]: e.target.value });
   }
