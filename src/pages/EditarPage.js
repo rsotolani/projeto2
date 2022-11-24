@@ -9,9 +9,6 @@ import {
   Row,
   Col,
   Form,
-  Spinner,
-  Badge,
-  Offcanvas,
   ListGroup,
 } from "react-bootstrap";
 
@@ -68,7 +65,7 @@ function EditarPage() {
       setForm({ ...form, active: e.target.checked });
       return;
     }
-    if(e.target.name=="usuario"||e.target.name=="local"||e.target.name=="data_devolucao"||e.target.name=="data_entrega"){
+    if(e.target.name==="usuario"||e.target.name==="local"||e.target.name==="data_devolucao"||e.target.name==="data_entrega"){
         setFormLocalizacao({ ...formLocalizacao,[e.target.name]: e.target.value });
     } else setForm({ ...form, [e.target.name]: e.target.value });
   }
@@ -77,25 +74,27 @@ function EditarPage() {
     e.preventDefault();
     try {
       let clone = { ...form };
+      //pega o registro de histórico que ja existia na planilha
       let cloneNotebooks = {...notebooks}
-      //pega itens da collection
+      //se houver registro, então adiciona os objetos de localização no array localizações
       if (cloneNotebooks.localizacao.length>0){
         cloneNotebooks.localizacao.map((objetolocalizacao) => {
             return (
                 localizacoes.push(objetolocalizacao)
             );})
       }
+      //adiciona os itens inseridos via formulario
       localizacoes.push(formLocalizacao);
-      console.log("clone notebooks ",cloneNotebooks.localizacao)
-      console.log("localizacoes ",localizacoes);
-      console.log("formlocalizacao ", formLocalizacao);
+      //limpa o primeiro registro vazio inserido na inicialização do formulário principal
       const index = clone.localizacao.indexOf(e.target.name);
       clone.localizacao.splice(index, 1);
+
+      //adiciona objeto por objeto do array de localizações no campo de localização
+      //do clone que será mandado para a atualização da collection
       localizacoes.map((localizacaoitem) => {
         return (
             clone.localizacao.push(localizacaoitem)
         );})
-      
       
       delete clone._id;
       
