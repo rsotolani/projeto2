@@ -17,7 +17,7 @@ const localizacoes = [];
 
 function EditarPage() {
     const { idItem } = useParams()
-    const [showEdit, setShowEdit] = useState(false); 
+    const [showEdit, setShowEdit] = useState(true); 
     const [form, setForm] = useState({
         acervo: "",
         tipo_equipamento: "",
@@ -58,7 +58,7 @@ function EditarPage() {
     }
 
     fetchNotebooks();
-  }, []);
+  }, [idItem]);
 
   function handleChange(e) {
     if (e.target.name === "active") {
@@ -142,8 +142,8 @@ function EditarPage() {
   }
 
     return ( 
-        <div>
-            <Container>
+        <div>{showEdit && (
+          <Container>
             <Card>
               <Card.Body>
                 <Form>
@@ -334,7 +334,9 @@ function EditarPage() {
                 
               </Card.Footer>
             </Card>
-        </Container>    
+        </Container>  
+        )}
+              
         </div>
      );
 }
