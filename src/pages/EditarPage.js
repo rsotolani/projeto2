@@ -197,9 +197,10 @@ function EditarPage() {
                       <Form.Label>Status do equipamento:</Form.Label>
                         <Form.Select
                             name="status"
-                            onChange={handleChange}>
+                            onChange={handleChange}
+                            defaultValue={notebooks.status}>
                             <option>Selecione uma opção</option>
-                            <option defaultValue="Em operação">Em operação</option>
+                            <option value="Em operação">Em operação</option>
                             <option value="Fora de uso">Fora de uso</option>
                         </Form.Select>   
                       </Form.Group>
@@ -214,9 +215,10 @@ function EditarPage() {
                       <Form.Label>Garantia do equipamento:</Form.Label>
                         <Form.Select
                             name="garantia"
-                            onChange={handleChange}>
+                            onChange={handleChange}
+                            defaultValue={notebooks.garantia}>
                             <option>Selecione uma opção</option>
-                            <option defaultValue="true">Em garantia</option>
+                            <option value="true">Em garantia</option>
                             <option value="false">Fora de garantia</option>
                         </Form.Select>
                       </Form.Group>

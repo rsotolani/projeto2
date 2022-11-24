@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Container, Card, Row, Col, Button, Table } from "react-bootstrap";
+import EmprestaItem from "../components/EmprestaItem";
 
 
 function DetalhesPage() {
@@ -26,7 +27,7 @@ function DetalhesPage() {
       );
       setItem(response.data);
       setIsLoading(false);
-      console.log(response.data);
+      //console.log(response.data);
     }
     fetchItem();
   }, [idItem]);
@@ -42,7 +43,8 @@ function DetalhesPage() {
     }
   }
 
-  console.log("isloading=",isLoading);
+  //console.log("isloading=",isLoading);
+  console.log(item);
 
   return (
     <Container>
@@ -121,12 +123,10 @@ function DetalhesPage() {
                     </Link>
                   </Col>
                   <Col>
-                    <Button variant="success" >
-                        Atualizar localização
-                    </Button>
+                    <EmprestaItem item={item}/>
                   </Col>
                   <Col>
-                    <Button variant="outline-danger" onClick={handleDelete}>
+                    <Button variant="danger" onClick={handleDelete}>
                         Excluir Registro
                     </Button>
                   </Col>
